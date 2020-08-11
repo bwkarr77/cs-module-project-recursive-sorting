@@ -7,9 +7,9 @@ def binary_search(arr, target, start, end):
         if arr[mid] == target:
             return mid
         elif arr[mid] > target:
-            return binary_search(arr, target, start, end - 1)
+            return binary_search(arr, target, start, mid - 1)
         else:
-            return binary_search(arr, target, start + 1, end)
+            return binary_search(arr, target, mid + 1, end)
     else:
         return -1
 
@@ -35,12 +35,10 @@ def agnostic_binary_search(arr, target, start=0, end=0):
         if arr[mid] == target:
             return mid
         # check for ascending or descending
-        elif (arr[mid] > target) and (arr[start] < arr[start+1]):
-            return agnostic_binary_search(arr, target, start, end - 1)
-        elif (arr[mid] < target) and (arr[start] > arr[start+1]):
-            return agnostic_binary_search(arr, target, start, end - 1)
+        elif ((arr[mid] > target) and (arr[start] < arr[start+1])) or ((arr[mid] < target) and (arr[start] > arr[start+1])):
+            return agnostic_binary_search(arr, target, start, mid - 1)
         else:
-            return agnostic_binary_search(arr, target, start + 1, end)
+            return agnostic_binary_search(arr, target, mid + 1, end)
     else:
         return -1
 
