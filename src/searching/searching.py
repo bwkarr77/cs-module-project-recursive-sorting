@@ -1,18 +1,18 @@
 # TO-DO: Implement a recursive implementation of binary search
 def binary_search(arr, target, start, end):
     # print(target, start, end, arr)
-    # Your code here
-    if len(arr) > 0:
-        if arr[start] == target:
-            return start
-        if arr[end] == target:
-            return end
+    if end >= start:
+        mid = (end + start)//2
+
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] > target:
+            return binary_search(arr, target, start, end - 1)
         else:
-            start += 1
-            end -= 1
-            return binary_search(arr, target, start, end)
+            return binary_search(arr, target, start + 1, end)
     else:
         return -1
+
 
 
 
@@ -23,22 +23,25 @@ def binary_search(arr, target, start, end):
 # You can implement this function either recursively 
 # or iteratively
 def agnostic_binary_search(arr, target, start=0, end=0):
-    if start == 0:
+    if (end == 0) and (len(arr) > 0):
         end = len(arr) - 1
     # print(arr, start, end)
 
     # Your code here
-    if (len(arr) > 0) and (start <= end):
-        if arr[start] == target:
-            # print(start)
-            return start
-        if arr[end] == target:
-            # print(end)
-            return end
+
+    if end >= start:
+        mid = (end + start)//2
+
+        if arr[mid] == target:
+            return mid
+        # check for ascending or descending
+        elif (arr[mid] > target) and (arr[start] < arr[start+1]):
+            return agnostic_binary_search(arr, target, start, end - 1)
+        elif (arr[mid] < target) and (arr[start] > arr[start+1]):
+            return agnostic_binary_search(arr, target, start, end - 1)
         else:
-            start += 1
-            end -= 1
-            return agnostic_binary_search(arr, target, start, end)
+            return agnostic_binary_search(arr, target, start + 1, end)
     else:
         return -1
+
 
